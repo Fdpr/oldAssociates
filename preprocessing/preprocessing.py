@@ -57,7 +57,7 @@ countries
 # In[8]:
 
 
-filtered = pd.concat(list(map(lambda country: data[data["country"] == country].sample(10000), countries)))
+filtered = pd.concat(list(map(lambda country: data[data["country"] == country].sample(frac=1), countries)))
 
 
 # In[9]:

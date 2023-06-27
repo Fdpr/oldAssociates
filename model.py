@@ -45,14 +45,15 @@ class WADataset(Dataset):
 
 class WordAssociationPredictionModel(nn.Module):
 
-    def __init__(self, embedding_model):
+    def __init__(self):
         super().__init__()
 
         self.activation = nn.ReLU()
-        self.embedding_model = embedding_model
-        self.linear1 = nn.Linear(600, 256)
-        self.linear2 = nn.Linear(256, 128)
-        self.linear3 = nn.Linear(128, 3)
+        self.linear1 = nn.Linear(600, 512)
+        self.linear2 = nn.Linear(512, 512)
+        self.linear3 = nn.Linear(512, 512)
+        self.linear4 = nn.Linear(512, 256)
+        self.linear5 = nn.Linear(256, 4)
 
     def forward(self, x: torch.Tensor):
         """
@@ -60,21 +61,24 @@ class WordAssociationPredictionModel(nn.Module):
         """
         x = self.activation(self.linear1(x))
         x = self.activation(self.linear2(x))
-        x = self.linear3(x)
+        x = self.activation(self.linear3(x))
+        x = self.activation(self.linear4(x))
+        x = self.linear5(x)
         return x
 
 
-    def embed(self, predictors: list):
-        """
-        Returns a cue and response embedding given
-        """
-        cues, all_responses = predictors
-        cue_vectors = torch.tensor(np.array([get_fasttext_embedding(cue, self.embedding_model) for cue in cues]))
-        response_vectors = torch.tensor(np.array([[get_fasttext_embedding(response, self.embedding_model) for response in responses] for responses in all_responses]))
-        # TODO: do the geometrically-weighted average in a more extensible way
-        response_vectors = torch.mean(response_vectors.transpose(0,2) * torch.tensor([1, .5, .25]), dim=-1).t()
 
-        return torch.cat([cue_vectors, response_vectors], dim=1)
+def embed(embedding_model, predictors: list):
+    """
+    Returns a cue and response embedding given
+    """
+    cues, all_responses = predictors
+    cue_vectors = torch.tensor(np.array([get_fasttext_embedding(cue, embedding_model) for cue in cues]))
+    response_vectors = torch.tensor(np.array([[get_fasttext_embedding(response, embedding_model) for response in responses] for responses in all_responses]))
+    # TODO: do the geometrically-weighted average in a more extensible way
+    response_vectors = torch.mean(response_vectors.transpose(0,2) * torch.tensor([1, 0, 0]), dim=-1).t()
+
+    return torch.cat([cue_vectors, response_vectors], dim=1)
 
 def train_model(
         data: pd.DataFrame,
@@ -87,13 +91,13 @@ def train_model(
     Train the model on a given dataframe
     """
     embedding_model = fasttext.load_model('data/crawl-300d-2M-subword.bin')
-    model = WordAssociationPredictionModel(embedding_model)
+    model = WordAssociationPredictionModel()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     loss_fn = nn.CrossEntropyLoss()
 
     # TODO: convert data to categories in preprocessing
     if target == "age":
-        data["age"] = data["age"].apply(lambda age: 0 if age < 30 else 1 if age < 60 else 2)
+        data["age"] = data["age"].apply(lambda age: 0 if age < 30 else 1 if age < 50 else 2 if age < 70 else 3)
 
     # shape the data into desired format
     labels = data[target]
@@ -109,7 +113,7 @@ def train_model(
         for X, y in tqdm(dataloader):
 
             optimizer.zero_grad()
-            X_embedding = model.embed(X)
+            X_embedding = embed(embedding_model, X)
             y_logits = model(X_embedding)
 
             loss = loss_fn(y_logits, y)
@@ -119,4 +123,4 @@ def train_model(
 
         print(f"mean loss: {running_loss / len(dataloader)}")
 
-    return model
+    return embedding_model, model

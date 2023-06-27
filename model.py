@@ -10,8 +10,6 @@ from typing import Iterable
 import fasttext
 from tqdm import tqdm
 
-EMBEDDINGS_PATH = "data/wiki-news-300d-1M-subword.vec"
-
 def get_fasttext_embedding(word: str, embedding_model: fasttext.FastText):
     """
     Returns a fasttext embedding for a given word, returning zero for non-responses
@@ -90,6 +88,7 @@ def train_model(
     """
     Train the model on a given dataframe
     """
+    # Download fastText from here: https://fasttext.cc/docs/en/english-vectors.html
     embedding_model = fasttext.load_model('data/crawl-300d-2M-subword.bin')
     model = WordAssociationPredictionModel()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)

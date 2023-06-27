@@ -2,6 +2,7 @@ data/
 __pycache__/
 .DS_Store
 !data/trained_model.p
+!data/trained_model.pt
 
 .ipynb_checkpoints
 

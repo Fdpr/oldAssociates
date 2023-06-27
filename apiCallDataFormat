@@ -1,0 +1,60 @@
+[
+  {
+    "rt": 907,
+    "stimulus": "<p>Consent text goes here. Please read this consent statement carefully before deciding whether to participate. This research has no known risks or anticipated direct benefits. You will not receive compensation for participating in this experiment. Your participation in this research is completely voluntary. You can end your participation at any time without penalty. Your participation is completely anonymous. By proceeding, you agree to participate in this experiment</p><br/><p>Press the button to continue.</p>",
+    "button_pressed": "0",
+    "trial_type": "html-button-response",
+    "trial_index": 0,
+    "time_elapsed": 908,
+    "internal_node_id": "0.0-0.0",
+    "user_id": null
+  },
+  {
+    "rt": 1008,
+    "stimulus": "<p>Welcome to the language age quiz! You'll provide some word associations.</p>",
+    "button_pressed": "0",
+    "trial_type": "html-button-response",
+    "trial_index": 1,
+    "time_elapsed": 1917,
+    "internal_node_id": "0.0-1.0",
+    "user_id": null
+  },
+  {
+    "rt": 820,
+    "stimulus": "\n         <h1>Instructions</h1>\n          <p>In this quiz, you will be asked to provide the first three words that come to mind for a cue!</p>\n          <p>Try to respond as quickly as you can. You do not need to fill all three boxes.</p>\n          </br>\n          <p>At the end of the quiz, we will use <b>advanced <i>space-age</i> artificial intelligence</b> guess your age based on your answers!</p>\n        ",
+    "button_pressed": "0",
+    "trial_type": "html-button-response",
+    "trial_index": 2,
+    "time_elapsed": 2737,
+    "internal_node_id": "0.0-2.0",
+    "user_id": null
+  },
+  {
+    "rt": 8695,
+    "responses": "{\"Q0\":\"first-word\",\"Q1\":\"second-word\",\"Q2\":\"third-word\"}",
+    "trial_type": "survey-text",
+    "trial_index": 3,
+    "time_elapsed": 11435,
+    "internal_node_id": "0.0-3.0",
+    "user_id": null
+  },
+  {
+    "rt": 2100,
+    "stimulus": "<p>Great job! Those were some good answers. Now for the real quiz!</p>",
+    "button_pressed": "0",
+    "trial_type": "html-button-response",
+    "trial_index": 4,
+    "time_elapsed": 13539,
+    "internal_node_id": "0.0-4.0",
+    "user_id": null
+  },
+  {
+    "rt": 10474,
+    "responses": "{\"Q0\":\"Cat-1\",\"Q1\":\"Cat-2\",\"Q2\":\"Cat-3\"}",
+    "trial_type": "survey-text",
+    "trial_index": 5,
+    "time_elapsed": 24015,
+    "internal_node_id": "0.0-5.0",
+    "user_id": null
+  }
+]

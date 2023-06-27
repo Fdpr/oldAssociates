@@ -5,4 +5,5 @@ __pycache__/
 !data/trained_model.pt
 
 .ipynb_checkpoints
-
+crawl-300d-2M-subword/
+preprocessing/SWOW-EN.complete_preprocessed.csv

@@ -63,7 +63,7 @@ filtered = pd.concat(list(map(lambda country: data[data["country"] == country].s
 # In[9]:
 
 
-filtered = filtered[["country", "age", "gender", "cue", "R1Raw", "R2Raw", "R3Raw"]]
+filtered = filtered[["participantID", "country", "age", "gender", "cue", "R1Raw", "R2Raw", "R3Raw"]]
 
 
 # We need to check how many entries a participant has made
@@ -77,5 +77,5 @@ filtered["amount"] = filtered.apply(lambda row: 1 if row["R2Raw"] == "No more re
 # In[12]:
 
 
-filtered.to_csv("SWOW-EN.complete_preprocessed.csv")
+filtered.to_csv("SWOW-EN.complete_preprocessed.csv", index = False)
 

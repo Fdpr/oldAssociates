@@ -73,7 +73,9 @@ class WordAssociationPredictionModel(nn.Module):
         response_vectors = torch.tensor(np.array([[get_fasttext_embedding(response, self.embedding_model) for response in responses] for responses in all_responses]))
         # TODO: do the geometrically-weighted average in a more extensible way
         response_vectors = torch.mean(response_vectors.transpose(0,2) * torch.tensor([1, .5, .25]), dim=-1).t()
-return torch.cat([cue_vectors, response_vectors], dim=1)
+
+        return torch.cat([cue_vectors, response_vectors], dim=1)
+
 def train_model(
         data: pd.DataFrame,
         target: str = "age",
@@ -82,7 +84,7 @@ def train_model(
         n_epochs = 10
     ):
     """
-    Train the model on a given dataframe and return it.
+    Train the model on a given dataframe
     """
     embedding_model = fasttext.load_model('data/crawl-300d-2M-subword.bin')
     model = WordAssociationPredictionModel(embedding_model)
@@ -94,7 +96,7 @@ def train_model(
         data["age"] = data["age"].apply(lambda age: 0 if age < 30 else 1 if age < 60 else 2)
 
     # shape the data into desired format
-    labels = torch.tensor(data[target], device=device)
+    labels = data[target]
     predictors = data[list(predictors)]
 
     dataset = WADataset(predictors, labels)

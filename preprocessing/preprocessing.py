@@ -12,7 +12,7 @@ import pandas as pd
 # In[2]:
 
 
-data = pd.read_csv("SWOW-EN.complete.csv")
+data = pd.read_csv("../data/SWOW-EN.complete.csv")
 
 
 # In[3]:

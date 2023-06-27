@@ -76,7 +76,7 @@ def embed(embedding_model, predictors: list):
     cue_vectors = torch.tensor(np.array([get_fasttext_embedding(cue, embedding_model) for cue in cues]))
     response_vectors = torch.tensor(np.array([[get_fasttext_embedding(response, embedding_model) for response in responses] for responses in all_responses]))
     # TODO: do the geometrically-weighted average in a more extensible way
-    response_vectors = torch.mean(response_vectors.transpose(0,2) * torch.tensor([1, 0, 0]), dim=-1).t()
+    response_vectors = torch.mean(response_vectors.transpose(0,2) * torch.tensor([1, 0.5, 0.25]), dim=-1).t()
 
     return torch.cat([cue_vectors, response_vectors], dim=1)
 

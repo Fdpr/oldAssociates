@@ -79,5 +79,5 @@ if __name__ == "__main__":
     print("confusion matrix:")
     print(conf_mat)
 
-    with open("data/trained_model_only_first_response.p", "wb") as fp:
+    with open("data/trained_model.p", "wb") as fp:
         pickle.dump(model, fp)
